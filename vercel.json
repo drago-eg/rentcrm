@@ -4,6 +4,7 @@
   "outputDirectory": "dist",
   "functions": {
     "api/index.js": {
+      "maxDuration": 30,
       "includeFiles": "backend/**"
     }
   },

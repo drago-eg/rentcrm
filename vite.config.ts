@@ -16,10 +16,15 @@ export default defineConfig(({ command }) => {
       tailwindcss(),
       {
         name: 'rental-gate-env-inject',
-        transformIndexHtml(html) {
-          const normalizedBase = base.endsWith('/') ? base : `${base}/`;
-          const injectScript = `    <script>window.__RG_BASE_URL__ = ${JSON.stringify(normalizedBase)}; window.__RG_API_BASE_URL__ = ${JSON.stringify(apiBaseUrl)};</script>\n`;
-          return html.replace('</head>', `${injectScript}  </head>`);
+        transformIndexHtml: {
+          order: 'post',
+          handler(html) {
+            const normalizedBase = base.endsWith('/') ? base : `${base}/`;
+            const injectScript = `    <script>window.__RG_BASE_URL__ = ${JSON.stringify(normalizedBase)}; window.__RG_API_BASE_URL__ = ${JSON.stringify(apiBaseUrl)};</script>\n`;
+            const withBasePaths = html
+              .replace(/(src|href)="\.\/assets\//g, `$1="${normalizedBase}assets/`);
+            return withBasePaths.replace('</head>', `${injectScript}  </head>`);
+          },
         },
       },
       {

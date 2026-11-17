@@ -1,0 +1,13 @@
+.aistudio/
+.git/
+.github/
+.playwright-cli/
+dist/
+node_modules/
+frontend/
+google-apps-script/
+tests/
+.env
+.env.*
+!.env.example
+*.log
